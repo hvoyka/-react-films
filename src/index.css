@@ -38,3 +38,6 @@ img {
   right: 0;
   margin-right: 0.75rem;
 }
+.search__filter label + label {
+  padding-left: 1.5rem;
+}

@@ -15,9 +15,8 @@ function Movie(props) {
           )}
         </div>
         <div className="card__content">
-          <span className="card__title">{title}</span>
-          <p>info</p>
-          <span>{year}</span> <span>{type}</span>
+          <p className="card__title">{title}</p>
+          <span>{year}</span> <span className="right">{type}</span>
         </div>
       </div>
     </div>

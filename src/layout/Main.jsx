@@ -19,8 +19,11 @@ class Main extends React.Component {
       });
   }
 
-  loadSearchResult = (searchString) => {
-    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchString}`)
+  loadSearchResult = (searchString, filter = "") => {
+    this.setState({ filter });
+    fetch(
+      `http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchString}&type=${filter}`
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.Response === "True") this.setState({ movies: data.Search });
