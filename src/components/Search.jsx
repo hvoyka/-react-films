@@ -1,85 +1,80 @@
-import React from "react";
+import React, {useState} from "react";
 
-class Search extends React.Component {
-  state = {
-    search: "",
-    filter: "",
-  };
+function Search ({loadSearchResult = Function.prototype}) {
 
-  handleKeyDown = (e) => {
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("");
+
+
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      this.props.loadSearchResult(this.state.search, this.state.filter);
+    loadSearchResult(search, filter);
     }
   };
-  handleFilter = (e) => {
-    this.setState(
-      () => ({ filter: e.target.value }),
-      () => {
-        this.props.loadSearchResult(this.state.search, this.state.filter);
-      }
-    );
+  const handleFilter = (e) => {
+    setFilter(e.target.value);
+    loadSearchResult(search, e.target.value);
+    
   };
 
-  render(props) {
-    return (
-      <div className="row">
-        <div className="input-field col s12">
-          <input
-            type="search"
-            placeholder="Search"
-            className="validate"
-            value={this.state.search}
-            onChange={(e) => this.setState({ search: e.target.value })}
-            onKeyDown={this.handleKeyDown}
-          />
-          <button
-            className="search__btn waves-effect waves-light btn-small"
-            onClick={() =>
-              this.props.loadSearchResult(this.state.search, this.state.filter)
-            }
-          >
-            Search <i className="material-icons right">search</i>
-          </button>
-        </div>
-        <div className="search__filter">
-          <label>
-            <input
-              className="with-gap"
-              name="filter"
-              type="radio"
-              value=""
-              onChange={this.handleFilter}
-              checked={this.state.filter === ""}
-            />
-            <span>All</span>
-          </label>
-
-          <label>
-            <input
-              className="with-gap"
-              name="filter"
-              type="radio"
-              value="movie"
-              onChange={this.handleFilter}
-              checked={this.state.filter === "movie"}
-            />
-            <span>Movie</span>
-          </label>
-
-          <label>
-            <input
-              className="with-gap"
-              name="filter"
-              type="radio"
-              value="series"
-              onChange={this.handleFilter}
-              checked={this.state.filter === "series"}
-            />
-            <span>Series</span>
-          </label>
-        </div>
+  return (
+    <div className="row">
+      <div className="input-field col s12">
+        <input
+          type="search"
+          placeholder="Search"
+          className="validate"
+          value={search}
+          onChange={(e) => setSearch( e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <button
+          className="search__btn waves-effect waves-light btn-small"
+          onClick={() =>
+          loadSearchResult(search, filter)
+          }
+        >
+          Search <i className="material-icons right">search</i>
+        </button>
       </div>
-    );
-  }
+      <div className="search__filter">
+        <label>
+          <input
+            className="with-gap"
+            name="filter"
+            type="radio"
+            value=""
+            onChange={handleFilter}
+            checked={filter === ""}
+          />
+          <span>All</span>
+        </label>
+
+        <label>
+          <input
+            className="with-gap"
+            name="filter"
+            type="radio"
+            value="movie"
+            onChange={handleFilter}
+            checked={filter === "movie"}
+          />
+          <span>Movie</span>
+        </label>
+
+        <label>
+          <input
+            className="with-gap"
+            name="filter"
+            type="radio"
+            value="series"
+            onChange={handleFilter}
+            checked={filter === "series"}
+          />
+          <span>Series</span>
+        </label>
+      </div>
+    </div>
+  );
 }
 export { Search };
